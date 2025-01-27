@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharedLibary.DTOs
 {
-    //Tüm API'lerde dönülecek hataların tutulduğu ortak sınıf
+    /// <summary>
+    /// Tüm API'lerde dönülecek hataların tutulduğu ortak sınıf
+    /// </summary>
     public class ErrorDto
     {
         //başka bir sınıftan set edilmesini engellemek için private set kullanıldı
