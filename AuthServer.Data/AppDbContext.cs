@@ -24,6 +24,8 @@ namespace AuthServer.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //entityler için yapmıs oldugumuz configurasyonların konumlarını belirtiyoruz.
+            builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             base.OnModelCreating(builder);
         }
     }
