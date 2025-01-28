@@ -89,9 +89,33 @@ namespace AuthServer.Service.Services
             return Response<ClientTokenDto>.Success(token, 200);
         }
 
-        public Task<Response<TokenDto>> CreateTokenByRefleshToken(string refleshToken)
+        /// <summary>
+        /// Reflesh token ile yeni token oluşturma işlemi
+        /// </summary>
+        public async Task<Response<TokenDto>> CreateTokenByRefleshToken(string refleshToken)
         {
-            throw new NotImplementedException();
+            var existRefleshToken = await _userRefleshTokenService.Where(x => x.Code == refleshToken).SingleOrDefaultAsync();
+
+            if (existRefleshToken == null)
+            {
+                return Response<TokenDto>.Fail("Reflesh token not found", 404, true);
+            }
+
+            var user= await _userManager.FindByIdAsync(existRefleshToken.UserId);
+
+            if (user == null)
+            {
+                return Response<TokenDto>.Fail("User Id not found", 404, true);
+            }
+
+            var tokenDto = _tokenService.CreateToken(user);
+
+            existRefleshToken.Code = tokenDto.RefleshToken;
+            existRefleshToken.Expiration = tokenDto.RefleshTokenExpiration;
+
+            await _unitOfWork.CommitAsync();
+
+            return Response<TokenDto>.Success(tokenDto,200);
         }
 
         public Task<Response<NoContentDto>> RevokeRefleshToken(string refleshToken)
