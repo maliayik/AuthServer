@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOptions"));
-builder.Services.Configure<Client>(builder.Configuration.GetSection("Clients"));
+builder.Services.Configure<List<Client>>(builder.Configuration.GetSection("Clients"));
 
 var app = builder.Build();
 
