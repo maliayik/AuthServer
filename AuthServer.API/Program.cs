@@ -1,3 +1,4 @@
+using AuthServer.Core.Configuration;
 using Microsoft.Extensions.Configuration;
 using SharedLibary.Configurations;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOptions"));
+builder.Services.Configure<Client>(builder.Configuration.GetSection("Clients"));
 
 var app = builder.Build();
 
