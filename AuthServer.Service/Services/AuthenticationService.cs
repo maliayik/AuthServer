@@ -12,6 +12,7 @@ using AuthServer.Core.Repositories;
 using AuthServer.Core.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthServer.Service.Services
 {
@@ -32,9 +33,42 @@ namespace AuthServer.Service.Services
             _userRefleshTokenService = userRefleshTokenService;
         }
 
-        public Task<Response<TokenDto>> CreateTokenAsync(LoginDto loginDto)
+        /// <summary>
+        /// Kullanıcı giriş işlemi sonrası token üretir
+        /// </summary>
+        public async Task<Response<TokenDto>> CreateTokenAsync(LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            if(loginDto==null) throw new ArgumentNullException(nameof(loginDto));
+
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+
+            if (user == null) return Response<TokenDto>.Fail("Email or Password is wrong", 400, true);
+
+            if (!await _userManager.CheckPasswordAsync(user, loginDto.Password))
+            {
+                if (user == null) return Response<TokenDto>.Fail("Email or Password is wrong", 400, true);
+            }
+
+            var token = _tokenService.CreateToken(user);
+
+            //dbde reflesh token var mı kontrol ediyoruz
+            var userRefleshToken = await _userRefleshTokenService.Where(x => x.UserId == user.Id).SingleOrDefaultAsync();
+
+            if (userRefleshToken == null)
+            {
+                await _userRefleshTokenService.AddAsync(new UserRefleshToken
+                    { UserId = user.Id, Code = token.RefleshToken, Expiration = token.RefleshTokenExpiration });
+            }
+            else
+            {
+                userRefleshToken.Code = token.RefleshToken;
+                userRefleshToken.Expiration = token.RefleshTokenExpiration;
+            }
+
+            await _unitOfWork.CommitAsync();
+
+            return Response<TokenDto>.Success(token, 200);
+
         }
 
         public Task<Response<ClientTokenDto>> CreateTokenByClient(ClientLoginDto clientLoginDto)
