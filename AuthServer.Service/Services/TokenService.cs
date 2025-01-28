@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using AuthServer.Core.DTOs;
 using AuthServer.Core.Models;
 using AuthServer.Core.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Options;
 using SharedLibary.Configurations;
 
@@ -37,6 +40,24 @@ namespace AuthServer.Service.Services
             rnd.GetBytes(numberByte);
 
             return Convert.ToBase64String(numberByte);
+        }
+
+        /// <summary>
+        /// Tokenemizin Payloadında olacak claimleri belirler
+        /// </summary>
+        private IEnumerable<Claim> GetClaim(UserApp userApp, List<String> audiences)
+        {
+            var userList= new List <Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, userApp.Id),
+                new Claim(JwtRegisteredClaimNames.Email, userApp.Email),
+                new Claim(ClaimTypes.Name,userApp.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                };
+            userList.AddRange(audiences.Select(x=> new Claim(JwtRegisteredClaimNames.Aud,x)));
+
+            return userList;
+
         }
 
         public TokenDto CreateToken(UserApp userApp)
