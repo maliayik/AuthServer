@@ -43,7 +43,7 @@ namespace AuthServer.Service.Services
         }
 
         /// <summary>
-        /// Tokenemizin Payloadında olacak claimleri belirler
+        /// Kullanıcı ile ilgili Tokenemizin Payloadında olacak claimleri belirler
         /// </summary>
         private IEnumerable<Claim> GetClaim(UserApp userApp, List<String> audiences)
         {
