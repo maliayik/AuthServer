@@ -118,9 +118,24 @@ namespace AuthServer.Service.Services
             return Response<TokenDto>.Success(tokenDto,200);
         }
 
-        public Task<Response<NoContentDto>> RevokeRefleshToken(string refleshToken)
+        /// <summary>
+        /// Var olan reflesh tokeni silme işlemi
+        /// </summary>
+        public async Task<Response<NoContentDto>> RevokeRefleshToken(string refleshToken)
         {
-            throw new NotImplementedException();
+            var existRefleshToken =
+                await _userRefleshTokenService.Where(x => x.Code == refleshToken).SingleOrDefaultAsync();
+
+            if (existRefleshToken == null)
+            {
+                return Response<NoContentDto>.Fail("Reflesh token not found", 404, true);
+            }
+
+            _userRefleshTokenService.Remove(existRefleshToken);
+
+            await _unitOfWork.CommitAsync();
+
+            return Response<NoContentDto>.Success(200);
         }
     }
 }
