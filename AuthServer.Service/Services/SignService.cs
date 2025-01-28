@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace AuthServer.Service.Services
 {
     // Bu klassın amacı, token oluştururken kullanılacak olan imzayı için simetrik security key'i oluşturmak.
-    internal static class SignService
+    public static class SignService
     {
         public static SecurityKey GetSymetricSecurityKey(string securityKey)
         {
