@@ -7,7 +7,7 @@ namespace AuthServer.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AuthController(IAuthenticationService authenticationService, IUserService userService) : CustomBaseController
+    public class AuthController(IAuthenticationService authenticationService) : CustomBaseController
     {
 
         [HttpPost]
