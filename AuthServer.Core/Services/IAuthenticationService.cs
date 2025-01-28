@@ -28,6 +28,6 @@ namespace AuthServer.Core.Services
         /// <summary>
         /// Tanımlı bir client için token oluşturma işlemi
         /// </summary>
-        Task<Response<ClientTokenDto>> CreateTokenByClient(ClientLoginDto clientLoginDto);
+        Response<ClientTokenDto> CreateTokenByClient(ClientLoginDto clientLoginDto);
     }
 }

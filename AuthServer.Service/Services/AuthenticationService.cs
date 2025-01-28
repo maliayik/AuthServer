@@ -38,7 +38,7 @@ namespace AuthServer.Service.Services
         /// </summary>
         public async Task<Response<TokenDto>> CreateTokenAsync(LoginDto loginDto)
         {
-            if(loginDto==null) throw new ArgumentNullException(nameof(loginDto));
+            if (loginDto == null) throw new ArgumentNullException(nameof(loginDto));
 
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
@@ -57,7 +57,7 @@ namespace AuthServer.Service.Services
             if (userRefleshToken == null)
             {
                 await _userRefleshTokenService.AddAsync(new UserRefleshToken
-                    { UserId = user.Id, Code = token.RefleshToken, Expiration = token.RefleshTokenExpiration });
+                { UserId = user.Id, Code = token.RefleshToken, Expiration = token.RefleshTokenExpiration });
             }
             else
             {
@@ -71,9 +71,22 @@ namespace AuthServer.Service.Services
 
         }
 
-        public Task<Response<ClientTokenDto>> CreateTokenByClient(ClientLoginDto clientLoginDto)
+        /// <summary>
+        /// Tanımlı bir client için token oluşturma işlemi
+        /// </summary>
+        public Response<ClientTokenDto> CreateTokenByClient(ClientLoginDto clientLoginDto)
         {
-            throw new NotImplementedException();
+            var client = _clients.SingleOrDefault(x =>
+                x.Id == clientLoginDto.ClientId && x.Secret == clientLoginDto.ClientSecret);
+
+            if (client == null)
+            {
+                return Response<ClientTokenDto>.Fail("ClientId or ClientSecret not found", 404, true);
+            }
+
+            var token = _tokenService.CreateTokenByClient(client);
+
+            return Response<ClientTokenDto>.Success(token, 200);
         }
 
         public Task<Response<TokenDto>> CreateTokenByRefleshToken(string refleshToken)
