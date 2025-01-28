@@ -20,9 +20,9 @@ namespace AuthServer.Service.Services
         {
             //identity kütüphanesi password hashlemeyi otomatik yapar
 
-            var user = new UserApp{Email = createUserDto.Email,UserName = createUserDto.UserName};
+            var user = new UserApp { Email = createUserDto.Email, UserName = createUserDto.UserName };
 
-           var result = await _userManager.CreateAsync(user, createUserDto.Password);
+            var result = await _userManager.CreateAsync(user, createUserDto.Password);
 
             if (!result.Succeeded)
             {
@@ -30,7 +30,7 @@ namespace AuthServer.Service.Services
                 return Response<UserAppDto>.Fail(new ErrorDto(errors, true), 400);
             }
 
-            return Response<UserAppDto>.Success(ObjectMapper.Mapper.Map<UserAppDto>(user),200);
+            return Response<UserAppDto>.Success(ObjectMapper.Mapper.Map<UserAppDto>(user), 200);
 
         }
 
@@ -40,7 +40,7 @@ namespace AuthServer.Service.Services
 
             if (user == null)
             {
-                return Response<UserAppDto>.Fail("UserName not found",4004,true);
+                return Response<UserAppDto>.Fail("UserName not found", 4004, true);
             }
 
             return Response<UserAppDto>.Success(ObjectMapper.Mapper.Map<UserAppDto>(user), 200);
