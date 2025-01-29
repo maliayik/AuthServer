@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SharedLibary.Configurations;
+using SharedLibary.Services;
 
 namespace AuthServer.Service.Services
 {
