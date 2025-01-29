@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SharedLibary.Configurations;
+using SharedLibary.Extensions;
 using SharedLibary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +59,8 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
+
+builder.Services.UseCustomValidationResponse();
 
 builder.Services.AddAuthorization(options =>
 {
