@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SharedLibary.Configurations;
+using SharedLibary.Exceptions;
 using SharedLibary.Extensions;
 using SharedLibary.Services;
 
@@ -93,6 +94,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//else
+//{
+//    app.UseCustomException();
+//}
+
+app.UseCustomException();
 
 app.UseHttpsRedirection();
 
