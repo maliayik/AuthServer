@@ -7,6 +7,7 @@ using AuthServer.Data;
 using AuthServer.Data.Repositories;
 using AuthServer.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -49,15 +50,21 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
-
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+        .Build();
+});
 
 
 builder.Services.AddIdentity<UserApp, IdentityRole>(options =>
 {
-    options.User.RequireUniqueEmail= true;
+    options.User.RequireUniqueEmail = true;
     options.Password.RequireNonAlphanumeric = false;
 }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
