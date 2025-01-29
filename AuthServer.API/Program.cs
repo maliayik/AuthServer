@@ -1,3 +1,4 @@
+using System.Reflection;
 using AuthServer.Core.Configuration;
 using AuthServer.Core.Models;
 using AuthServer.Core.Repositories;
@@ -6,6 +7,8 @@ using AuthServer.Core.UnitOfWork;
 using AuthServer.Data;
 using AuthServer.Data.Repositories;
 using AuthServer.Service.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +34,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
 
 //Authentications konfigürasyonu
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<CustomTokenOption>();
