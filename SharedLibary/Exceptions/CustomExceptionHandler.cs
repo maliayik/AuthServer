@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using SharedLibary.DTOs;
+using System.Text.Json;
 
 namespace SharedLibary.Exceptions
 {
@@ -37,7 +32,6 @@ namespace SharedLibary.Exceptions
                         if (exception is CustomException)
                         {
                             errorDto = new ErrorDto(exception.Message, true);
-
                         }
                         else
                         {
@@ -49,10 +43,8 @@ namespace SharedLibary.Exceptions
 
                         await context.Response.WriteAsync(JsonSerializer.Serialize(response));
                     }
-
                 });
             });
-
         }
     }
 }

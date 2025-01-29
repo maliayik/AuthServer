@@ -1,6 +1,5 @@
 ﻿using AuthServer.Core.DTOs;
 using AuthServer.Core.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthServer.API.Controllers
@@ -9,7 +8,6 @@ namespace AuthServer.API.Controllers
     [ApiController]
     public class AuthController(IAuthenticationService authenticationService) : CustomBaseController
     {
-
         [HttpPost]
         public async Task<IActionResult> CreateToken(LoginDto loginDto)
         {

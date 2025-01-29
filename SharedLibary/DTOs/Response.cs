@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace SharedLibary.DTOs
 {
@@ -22,7 +17,6 @@ namespace SharedLibary.DTOs
         [JsonIgnore]
         public bool isSuccessful { get; private set; }
 
-
         /// <summary>
         /// Data ve StatusCode döneceği zaman kullanılır
         /// </summary>
@@ -37,7 +31,6 @@ namespace SharedLibary.DTOs
         /// Çoklu Hata durumlarında kullanılır
         /// </summary>
         public static Response<T> Fail(ErrorDto errorDto, int statusCode) => new Response<T> { Error = errorDto, StatusCode = statusCode, isSuccessful = false };
-
 
         /// <summary>
         /// Tek bir hata döneceği zaman kullanılır

@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace AuthServer.API.Validations
 {
-    public class CreateUserDtoValidator:AbstractValidator<CreateUserDto>
+    public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
     {
         public CreateUserDtoValidator()
         {
@@ -14,6 +14,5 @@ namespace AuthServer.API.Validations
 
             RuleFor(x => x.UserName).NotEmpty().WithMessage("Username is required");
         }
-
     }
 }

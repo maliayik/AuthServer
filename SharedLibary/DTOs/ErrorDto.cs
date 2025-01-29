@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedLibary.DTOs
+﻿namespace SharedLibary.DTOs
 {
     /// <summary>
     /// Tüm API'lerde dönülecek hataların tutulduğu ortak sınıf
@@ -13,8 +7,8 @@ namespace SharedLibary.DTOs
     {
         //başka bir sınıftan set edilmesini engellemek için private set kullanıldı
         public List<string> Errors { get; private set; } = new List<string>();
-        public bool IsShow { get; private set; }//client tarafında hata mesajlarını göstermek isteyip istemediğini belirleyen property
 
+        public bool IsShow { get; private set; }//client tarafında hata mesajlarını göstermek isteyip istemediğini belirleyen property
 
         //tek hata durumları için
         public ErrorDto(string error, bool isShow)
@@ -29,6 +23,5 @@ namespace SharedLibary.DTOs
             Errors = errors;
             IsShow = isShow;
         }
-
     }
 }

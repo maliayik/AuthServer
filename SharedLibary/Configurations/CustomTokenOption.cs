@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedLibary.Configurations
+﻿namespace SharedLibary.Configurations
 {
     //appsettings.json dosyasındaki TokenOptions alanlarına karşılıl gelen sınıf
     public class CustomTokenOption

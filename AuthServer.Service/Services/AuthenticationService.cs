@@ -1,18 +1,13 @@
-﻿using AuthServer.Core.DTOs;
-using AuthServer.Core.Services;
-using SharedLibary.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AuthServer.Core.Configuration;
+﻿using AuthServer.Core.Configuration;
+using AuthServer.Core.DTOs;
 using AuthServer.Core.Models;
 using AuthServer.Core.Repositories;
+using AuthServer.Core.Services;
 using AuthServer.Core.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using SharedLibary.DTOs;
 
 namespace AuthServer.Service.Services
 {
@@ -68,7 +63,6 @@ namespace AuthServer.Service.Services
             await _unitOfWork.CommitAsync();
 
             return Response<TokenDto>.Success(token, 200);
-
         }
 
         /// <summary>
@@ -101,7 +95,7 @@ namespace AuthServer.Service.Services
                 return Response<TokenDto>.Fail("Reflesh token not found", 404, true);
             }
 
-            var user= await _userManager.FindByIdAsync(existRefleshToken.UserId);
+            var user = await _userManager.FindByIdAsync(existRefleshToken.UserId);
 
             if (user == null)
             {
@@ -115,7 +109,7 @@ namespace AuthServer.Service.Services
 
             await _unitOfWork.CommitAsync();
 
-            return Response<TokenDto>.Success(tokenDto,200);
+            return Response<TokenDto>.Success(tokenDto, 200);
         }
 
         /// <summary>

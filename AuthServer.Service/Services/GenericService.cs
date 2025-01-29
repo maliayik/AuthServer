@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using AuthServer.Core.Repositories;
+﻿using AuthServer.Core.Repositories;
 using AuthServer.Core.Services;
 using AuthServer.Core.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using SharedLibary.DTOs;
+using System.Linq.Expressions;
 
 namespace AuthServer.Service.Services
 {
@@ -31,7 +26,7 @@ namespace AuthServer.Service.Services
 
             await _unitOfWork.CommitAsync();
 
-            var newDto= ObjectMapper.Mapper.Map<TDto>(newEntity);
+            var newDto = ObjectMapper.Mapper.Map<TDto>(newEntity);
 
             return Response<TDto>.Success(newDto, 200);
         }
@@ -53,7 +48,6 @@ namespace AuthServer.Service.Services
             }
 
             return Response<TDto>.Success(ObjectMapper.Mapper.Map<TDto>(product), 200);
-
         }
 
         public async Task<Response<NoContentDto>> Remove(int id)
@@ -71,7 +65,7 @@ namespace AuthServer.Service.Services
             return Response<NoContentDto>.Success(204);
         }
 
-        public async Task<Response<NoContentDto>> Update(TDto dto,int id)
+        public async Task<Response<NoContentDto>> Update(TDto dto, int id)
         {
             var isExistEntity = await _genericRepository.GetByIdAsync(id);
 
@@ -90,7 +84,7 @@ namespace AuthServer.Service.Services
 
         public async Task<Response<IEnumerable<TDto>>> Where(Expression<Func<TEntity, bool>> predicate)
         {
-           var list =  _genericRepository.Where(predicate);
+            var list = _genericRepository.Where(predicate);
 
             //sayfalama istersek burada yapabiliriz
 

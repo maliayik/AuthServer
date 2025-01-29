@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using AuthServer.Core.Repositories;
+﻿using AuthServer.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AuthServer.Data.Repositories
 {
@@ -37,7 +32,6 @@ namespace AuthServer.Data.Repositories
 
         public void Remove(TEntity entity) => _dbSet.Remove(entity);
 
-
         public TEntity Update(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
@@ -45,6 +39,5 @@ namespace AuthServer.Data.Repositories
         }
 
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate);
-
     }
 }

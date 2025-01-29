@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AuthServer.Core.DTOs
+﻿namespace AuthServer.Core.DTOs
 {
     /// <summary>
     /// Kullanıcı giriş işlemleri sonrası login durumuna göre token üretmek için kullanılacak model

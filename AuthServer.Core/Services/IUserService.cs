@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AuthServer.Core.DTOs;
+﻿using AuthServer.Core.DTOs;
 using SharedLibary.DTOs;
 
 namespace AuthServer.Core.Services
@@ -13,8 +8,8 @@ namespace AuthServer.Core.Services
     /// </summary>
     public interface IUserService
     {
-        Task <Response<UserAppDto>> CreateUserAsync(CreateUserDto createUserDto);
-        Task<Response<UserAppDto>> GetUserByNameAsync(string userName);
+        Task<Response<UserAppDto>> CreateUserAsync(CreateUserDto createUserDto);
 
+        Task<Response<UserAppDto>> GetUserByNameAsync(string userName);
     }
 }

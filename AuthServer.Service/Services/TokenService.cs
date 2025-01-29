@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using AuthServer.Core.Configuration;
+﻿using AuthServer.Core.Configuration;
 using AuthServer.Core.DTOs;
 using AuthServer.Core.Models;
 using AuthServer.Core.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SharedLibary.Configurations;
 using SharedLibary.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace AuthServer.Service.Services
 {
@@ -23,8 +17,6 @@ namespace AuthServer.Service.Services
     {
         private readonly UserManager<UserApp> _userManager;
         private readonly CustomTokenOption _tokenOption;
-
-
 
         public TokenService(UserManager<UserApp> userManager, IOptions<CustomTokenOption> options)
         {
@@ -59,7 +51,6 @@ namespace AuthServer.Service.Services
             userList.AddRange(audiences.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
 
             return userList;
-
         }
 
         /// <summary>
@@ -111,14 +102,13 @@ namespace AuthServer.Service.Services
             return tokenDto;
         }
 
-
         /// <summary>
         /// Üyelik sistemi gerektirmeyen client bilgilerine göre token oluşturur
         /// </summary>
         public ClientTokenDto CreateTokenByClient(Client client)
         {
             var accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOption.AccessTokenExpiration);
-            
+
             var securityKey = SignService.GetSymetricSecurityKey(_tokenOption.SecurityKey);
 
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AuthServer.Core.Configuration
+﻿namespace AuthServer.Core.Configuration
 {
     /// <summary>
     /// Authorization server'a istek yapacak clientlara karşılık gelen sınıf
@@ -13,7 +7,7 @@ namespace AuthServer.Core.Configuration
     {
         public string Id { get; set; }
         public string Secret { get; set; }
-       
+
         /// <summary>
         /// Hangi api'ye erişim izni var bilgisini tutar
         /// </summary>
