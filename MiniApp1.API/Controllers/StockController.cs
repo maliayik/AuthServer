@@ -10,15 +10,16 @@ namespace MiniApp1.API.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
+        [HttpGet]
         public IActionResult GetStock()
         {
             var userName = HttpContext.User.Identity.Name;
 
-            var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
             //TODO  tabanında userID veya username ile ilgili alanlar içeren tablolarla işlem yapılabilir.
 
-            return Ok($"Stock işlemleri => Username:{userName} - UserId={userId}");
+            return Ok($"Stock işlemleri => Username:{userName} - UserId={userIdClaim.Value}");
         }
     }
 }

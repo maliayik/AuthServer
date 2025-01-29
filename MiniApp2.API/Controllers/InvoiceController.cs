@@ -10,15 +10,16 @@ namespace MiniApp2.API.Controllers
     [ApiController]
     public class InvoiceController : ControllerBase
     {
+        [HttpGet]
         public IActionResult GetInvoices()
         {
             var userName = HttpContext.User.Identity.Name;
 
-            var userId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
             //TODO veri tabanında userID veya username ile ilgili alanlar içeren tablolarla işlem yapılabilir.
 
-            return Ok($"İnvoince işlemleri => Username:{userName} - UserId={userId}");
+            return Ok($"İnvoince işlemleri => Username:{userName} - UserId={userIdClaim.Value}");
         }
     }
 }
