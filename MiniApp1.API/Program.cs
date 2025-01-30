@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using SharedLibary.Configurations;
 using SharedLibary.Extensions;
 
@@ -14,6 +15,15 @@ builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("
 //Authentications konfigürasyonu
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<CustomTokenOption>();
 builder.Services.AddCustomTokenAuth(tokenOptions);
+
+//claim authorization için policy tanýmlamasý
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AnkaraPolicy", policy =>
+    {
+        policy.RequireClaim("city", "ankara");
+    });
+});
 
 var app = builder.Build();
 
