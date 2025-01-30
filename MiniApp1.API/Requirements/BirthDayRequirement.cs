@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using MiniApp1.API.Requirements;
 
 namespace MiniApp1.API.Requirements
 {
@@ -43,9 +42,7 @@ namespace MiniApp1.API.Requirements
                 }
 
                 return Task.CompletedTask;
-
             }
         }
     }
 }
-

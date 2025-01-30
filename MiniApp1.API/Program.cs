@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 using MiniApp1.API.Requirements;
 using SharedLibary.Configurations;
 using SharedLibary.Extensions;
