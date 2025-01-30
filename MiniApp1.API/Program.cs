@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using MiniApp1.API.Requirements;
 using SharedLibary.Configurations;
 using SharedLibary.Extensions;
+using static MiniApp1.API.Requirements.BirthDayRequirement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOptions"));
+builder.Services.AddSingleton<IAuthorizationHandler, BirthDayRequirementHandler>();
 
 //Authentications konfigürasyonu
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<CustomTokenOption>();
@@ -22,6 +26,11 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AnkaraPolicy", policy =>
     {
         policy.RequireClaim("city", "ankara");
+    });
+
+    options.AddPolicy("AgePolicy", policy =>
+    {
+        policy.Requirements.Add(new BirthDayRequirement(18));
     });
 });
 
