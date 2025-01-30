@@ -4,7 +4,8 @@ using System.Security.Claims;
 
 namespace MiniApp1.API.Controllers
 {
-    [Authorize]
+    //rol bazlı authorization
+    [Authorize(Roles = "admin,manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class StockController : ControllerBase

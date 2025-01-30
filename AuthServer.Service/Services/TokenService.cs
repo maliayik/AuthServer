@@ -39,8 +39,10 @@ namespace AuthServer.Service.Services
         /// <summary>
         /// Üyelik sistemi gerektiren claimleri oluşturan methot
         /// </summary>
-        private IEnumerable<Claim> GetClaims(UserApp userApp, List<String> audiences)
+        private async Task <IEnumerable<Claim>> GetClaims(UserApp userApp, List<String> audiences)
         {
+            var userRole = await _userManager.GetRolesAsync(userApp);
+
             var userList = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userApp.Id),
@@ -49,6 +51,7 @@ namespace AuthServer.Service.Services
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 };
             userList.AddRange(audiences.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
+            userList.AddRange(userRole.Select(x=> new Claim(ClaimTypes.Role,x)));
 
             return userList;
         }
@@ -83,7 +86,7 @@ namespace AuthServer.Service.Services
                 issuer: _tokenOption.Issuer,
                 notBefore: DateTime.Now,
                 expires: accessTokenExpiration,
-                claims: GetClaims(userApp, _tokenOption.Audience),
+                claims:GetClaims(userApp, _tokenOption.Audience).Result,
                 signingCredentials: signingCredentials
             );
 

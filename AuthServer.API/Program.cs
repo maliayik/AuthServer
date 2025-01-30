@@ -35,6 +35,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+builder.Services.UseCustomValidationResponse();
 
 //Authentications konfigürasyonu
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<CustomTokenOption>();

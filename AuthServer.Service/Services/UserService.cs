@@ -9,7 +9,7 @@ namespace AuthServer.Service.Services
     /// <summary>
     ///  Kullanıcı kayıt işlemlerini yapacağımız servis
     /// </summary>
-    public class UserService(UserManager<UserApp> _userManager) : IUserService
+    public class UserService(UserManager<UserApp> _userManager, RoleManager<IdentityRole> roleManager) : IUserService
     {
         public async Task<Response<UserAppDto>> CreateUserAsync(CreateUserDto createUserDto)
         {
@@ -26,6 +26,22 @@ namespace AuthServer.Service.Services
             }
 
             return Response<UserAppDto>.Success(ObjectMapper.Mapper.Map<UserAppDto>(user), 200);
+        }
+
+        public async Task<Response<NoContentDto>> CreateUserRoles(string userName)
+        {
+            if (!await roleManager.RoleExistsAsync("admin") || !await roleManager.RoleExistsAsync("manager"))
+            {
+                await roleManager.CreateAsync(new() { Name = "admin" });
+                await roleManager.CreateAsync(new() { Name = "manager" });
+            }
+
+            var user = await _userManager.FindByNameAsync(userName);
+
+            await _userManager.AddToRoleAsync(user, "admin");
+            await _userManager.AddToRoleAsync(user, "manager");
+
+            return Response<NoContentDto>.Success(204);
         }
 
         public async Task<Response<UserAppDto>> GetUserByNameAsync(string userName)
